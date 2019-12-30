@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace HT.Future.Service
 {
-    public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class, IEntity
+    public abstract class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class, IEntity
     {
         protected readonly HtDbContext DbContext;
         public DbSet<TEntity> Entities { get; }

@@ -23,7 +23,7 @@ namespace HT.Future.Application
             Message = message ?? statusCode.ToDisplay();
         }
 
-        #region Implicit Operators
+        #region 实现隐式转化
         public static implicit operator ApiResult(OkResult result)
         {
             return new ApiResult(true, ApiResultStatusCode.Success);
@@ -69,7 +69,7 @@ namespace HT.Future.Application
             Data = data;
         }
 
-        #region Implicit Operators
+        #region 实现隐式转化
         public static implicit operator ApiResult<TData>(TData data)
         {
             return new ApiResult<TData>(true, ApiResultStatusCode.Success, data);

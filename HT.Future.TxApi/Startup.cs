@@ -20,6 +20,8 @@ using System.IO;
 using Microsoft.OpenApi.Models;
 using AutoMapper;
 using HT.Future.Entities;
+using HT.Future.Common;
+using System.Text;
 
 namespace HT.Future.TxApi
 {
@@ -40,12 +42,13 @@ namespace HT.Future.TxApi
                 // 设置默认的json格式化参数
                 .AddNewtonsoftJson(option =>
                 {
-                    option.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-                    option.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-                    option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    option.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";                 // 日期格式化规范
+                    //option.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;           // 控制忽略
+                    option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;     // 循环引用忽略
                 });
 
-            // 跨域
+            #region 跨域
+
             services.AddCors(options =>
             {
                 options.AddPolicy(MyAllowSpecificOrigins,
@@ -56,6 +59,16 @@ namespace HT.Future.TxApi
                     .AllowAnyMethod();
                 });
             });
+
+            #endregion
+
+            #region NLog
+
+            NLog.LogManager.LoadConfiguration("NLog.config");
+            NLog.LogManager.Configuration.Variables["connectionString"] = Configuration.GetConnectionString("sqlserver");
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+            #endregion
 
             #region Database
 
@@ -134,6 +147,11 @@ namespace HT.Future.TxApi
 
             #endregion
 
+            #region 服务注入
+
+            services.AddServices();
+
+            #endregion
 
         }
 
