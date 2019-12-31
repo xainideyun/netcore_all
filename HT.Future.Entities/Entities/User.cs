@@ -19,12 +19,11 @@ namespace HT.Future.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public override int Id { get => base.Id; set => base.Id = value; }
-        [Required]
-        [StringLength(100)]
         public string FullName { get; set; }
         public int Age { get; set; }
         public GenderType Gender { get; set; }
         public bool IsActive { get; set; } = true;
+        public virtual ICollection<Address> Addresses { get; set; }
     }
 
     /// <summary>

@@ -25,7 +25,7 @@ namespace HT.Future.TxApi.Controllers
         }
 
         /// <summary>
-        /// 
+        /// 获取用户列表
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -33,6 +33,18 @@ namespace HT.Future.TxApi.Controllers
         {
             var list = await _service.TableNoTracking.ToListAsync();
             return _mapper.Map<List<User>, List<UserDto>>(list);
+        }
+
+        /// <summary>
+        /// 删除用户
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public async Task<ApiResult> Delete(int id)
+        {
+            await _service.DeleteAsync(new User { Id = id });
+            return Content("删除成功");
         }
 
     }

@@ -59,6 +59,21 @@ namespace HT.Future.Common
             return Enum.GetValues(value.GetType()).Cast<Enum>().ToDictionary(p => Convert.ToInt32(p), q => ToDisplay(q));
         }
 
+
+        /// <summary>
+        /// 动态加载所有继承于指定基类的类型
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        /// <param name="baseType"></param>
+        /// <param name="assemblies"></param>
+        public static void RegisterAllEntities<BaseType>(this ModelBuilder modelBuilder, params Assembly[] assemblies)
+        {
+            IEnumerable<Type> types = assemblies.SelectMany(a => a.GetExportedTypes())
+                .Where(c => c.IsClass && !c.IsAbstract && c.IsPublic && typeof(BaseType).IsAssignableFrom(c));
+
+            foreach (Type type in types)
+                modelBuilder.Entity(type);
+        }
         /// <summary>
         /// 通过反射动态加载所有的IEntityTypeConfiguration配置
         /// </summary>
@@ -82,21 +97,6 @@ namespace HT.Future.Common
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// 动态加载所有继承于指定基类的类型
-        /// </summary>
-        /// <param name="modelBuilder"></param>
-        /// <param name="baseType"></param>
-        /// <param name="assemblies"></param>
-        public static void RegisterAllEntities<BaseType>(this ModelBuilder modelBuilder, params Assembly[] assemblies)
-        {
-            IEnumerable<Type> types = assemblies.SelectMany(a => a.GetExportedTypes())
-                .Where(c => c.IsClass && !c.IsAbstract && c.IsPublic && typeof(BaseType).IsAssignableFrom(c));
-
-            foreach (Type type in types)
-                modelBuilder.Entity(type);
         }
 
         /// <summary>

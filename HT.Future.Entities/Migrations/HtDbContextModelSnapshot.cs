@@ -19,6 +19,80 @@ namespace HT.Future.Entities.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("HT.Future.Entities.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Detail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Lat")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Lng")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Address");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Detail = "湖北省武汉市珞瑜路12号",
+                            Lat = 1.0,
+                            Lng = 2.0,
+                            Phone = "13900000000",
+                            Title = "武汉大学",
+                            UserId = 1
+                        });
+                });
+
+            modelBuilder.Entity("HT.Future.Entities.NLogInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Callsite")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Exception")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Level")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Logger")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NLogInfo");
+                });
+
             modelBuilder.Entity("HT.Future.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -42,9 +116,7 @@ namespace HT.Future.Entities.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
@@ -94,7 +166,7 @@ namespace HT.Future.Entities.Migrations
                             Id = 1,
                             AccessFailedCount = 0,
                             Age = 31,
-                            ConcurrencyStamp = "37ce5c2a-27e3-48bf-a6c4-39696a871e86",
+                            ConcurrencyStamp = "8e8e322f-81a5-4aaf-b3ac-6a9d39b94a0d",
                             EmailConfirmed = false,
                             FullName = "孙小双",
                             Gender = 0,
@@ -105,6 +177,14 @@ namespace HT.Future.Entities.Migrations
                             TwoFactorEnabled = false,
                             UserName = "sunxiaoshuang"
                         });
+                });
+
+            modelBuilder.Entity("HT.Future.Entities.Address", b =>
+                {
+                    b.HasOne("HT.Future.Entities.User", "User")
+                        .WithMany("Addresses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 #pragma warning restore 612, 618
         }

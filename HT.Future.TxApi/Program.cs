@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog.Web;
 
 namespace HT.Future.TxApi
 {
@@ -14,7 +15,21 @@ namespace HT.Future.TxApi
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Migration().Run();
+            var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+            try
+            {
+                logger.Debug("程序启动中...");
+                CreateHostBuilder(args).Build().Migration().Run();
+            }
+            catch (Exception exception)
+            {
+                logger.Error(exception, "程序因为异常停止");
+                throw;
+            }
+            finally
+            {
+                NLog.LogManager.Shutdown();
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -22,7 +37,13 @@ namespace HT.Future.TxApi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                })
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.SetMinimumLevel(LogLevel.Trace);
+                })
+                .UseNLog();
 
         
     }

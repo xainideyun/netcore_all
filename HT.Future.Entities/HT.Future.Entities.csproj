@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20191231063804_Init.cs" />
+    <Compile Remove="Migrations\20191231063804_Init.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\HT.Future.Common\HT.Future.Common.csproj" />
   </ItemGroup>
 

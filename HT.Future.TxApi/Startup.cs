@@ -20,8 +20,8 @@ using System.IO;
 using Microsoft.OpenApi.Models;
 using AutoMapper;
 using HT.Future.Entities;
-using HT.Future.Common;
 using System.Text;
+using NLog.Extensions.Logging;
 
 namespace HT.Future.TxApi
 {
@@ -64,9 +64,7 @@ namespace HT.Future.TxApi
 
             #region NLog
 
-            NLog.LogManager.LoadConfiguration("NLog.config");
             NLog.LogManager.Configuration.Variables["connectionString"] = Configuration.GetConnectionString("sqlserver");
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
             #endregion
 
@@ -155,12 +153,14 @@ namespace HT.Future.TxApi
 
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory factory)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
+
+            app.UseCustomExceptionHandler();
 
             app.UseStaticFiles();
 
@@ -177,7 +177,7 @@ namespace HT.Future.TxApi
             app.UseCors(MyAllowSpecificOrigins);    // 跨域中间件
 
             app.UseAuthentication();                // 认证中间件
-            
+
             app.UseAuthorization();                 // 授权中间件
 
             app.UseEndpoints(endpoints =>
