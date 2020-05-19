@@ -19,10 +19,29 @@ namespace HT.Future.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public override int Id { get => base.Id; set => base.Id = value; }
+        /// <summary>
+        /// 用户全名
+        /// </summary>
         public string FullName { get; set; }
+        /// <summary>
+        /// 年龄
+        /// </summary>
         public int Age { get; set; }
+        /// <summary>
+        /// 性别
+        /// </summary>
         public GenderType Gender { get; set; }
+        /// <summary>
+        /// 头像地址
+        /// </summary>
+        public string Avator { get; set; }
+        /// <summary>
+        /// 是否激活
+        /// </summary>
         public bool IsActive { get; set; } = true;
+        /// <summary>
+        /// 地址列表
+        /// </summary>
         public virtual ICollection<Address> Addresses { get; set; }
     }
 
@@ -33,7 +52,7 @@ namespace HT.Future.Entities
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.Property(p => p.UserName).IsRequired().HasMaxLength(100);
+            builder.Property(p => p.UserName).IsRequired().HasMaxLength(100);       // 用户名必填且长度最大100
         }
     }
 

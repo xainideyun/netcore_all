@@ -12,7 +12,9 @@ namespace HT.Future.Application
         public CustomProfile()
         {
             CreateMap<User, UserDto>()
-                .ForMember(source => source.Gender, target => target.MapFrom(a => a.Gender.ToDisplay(DisplayProperty.Name)))
+                //.ForMember(source => source.Gender, target => target.MapFrom(a => a.Gender.ToDisplay(DisplayProperty.Name)))
+                .ForMember(source => source.Name, target => target.MapFrom(a => a.FullName))
+                .ForMember(source => source.User_id, target => target.MapFrom(a => a.Id))
                 .ReverseMap();
         }
     }

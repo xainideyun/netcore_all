@@ -1125,3 +1125,5 @@ Error Number:137,State:2,Class:15
 2020-01-03 15:11:10.7044 Info Adding target FileTarget(Name=ownFile-web)
 2020-01-03 15:11:10.7358 Info Adding target DatabaseTarget(Name=database)
 2020-01-03 15:11:10.7801 Info Found 56 configuration items
+2020-01-06 08:51:40.1548 Info AppDomain Shutting down. Logger closing...
+2020-01-06 08:51:40.2425 Info Logger has been shut down.

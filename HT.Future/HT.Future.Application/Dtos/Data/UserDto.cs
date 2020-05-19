@@ -7,10 +7,13 @@ namespace HT.Future.Application
 {
     public class UserDto
     {
-        public int Id { get; set; }
-        public string FullName { get; set; }
+        public int User_id { get; set; }
+        public string Name { get; set; }
         public string Gender { get; set; }
         public string UserName { get; set; }
+        public List<string> Access { get; set; }
+        public string Token { get; set; }
+        public string Avator { get; set; }
         public string Email { get; set; }
 
     }
