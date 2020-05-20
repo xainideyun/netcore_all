@@ -198,7 +198,7 @@ namespace HT.Future.TxApi
 
             //app.UseCustomExceptionHandler();
 
-            //app.UseDefaultFiles();
+            app.UseDefaultFiles();
 
             app.UseStaticFiles();
 
