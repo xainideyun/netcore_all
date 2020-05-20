@@ -87,13 +87,16 @@ namespace HT.Future.TxApi
 
             #region NLog
 
-            NLog.LogManager.Configuration.Variables["connectionString"] = Configuration.GetConnectionString("sqlserver");
+            //NLog.LogManager.Configuration.Variables["connectionString"] = Configuration.GetConnectionString("sqlserver");
+            NLog.LogManager.Configuration.Variables["connectionString"] = Configuration.GetConnectionString("mysql");
 
             #endregion
 
             #region Database
 
-            services.AddDbContext<HtDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("sqlserver"), a => a.MigrationsAssembly(typeof(HtDbContext).Assembly.FullName)));
+            //services.AddDbContext<HtDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("mysql"), a => a.MigrationsAssembly(typeof(HtDbContext).Assembly.FullName)));
+
+            services.AddDbContext<HtDbContext>(options => options.UseMySQL(Configuration["connectionStrings:mysql"], b => b.MigrationsAssembly(typeof(HtDbContext).Assembly.FullName)));
             services.Migration();
 
             #endregion
@@ -195,7 +198,7 @@ namespace HT.Future.TxApi
 
             //app.UseCustomExceptionHandler();
 
-            app.UseDefaultFiles();
+            //app.UseDefaultFiles();
 
             app.UseStaticFiles();
 
@@ -207,7 +210,7 @@ namespace HT.Future.TxApi
                 {
                     c.SwaggerEndpoint($"/swagger/{item.GroupName}/swagger.json", "CoreAPI" + item.ApiVersion);
                 }
-                c.RoutePrefix = string.Empty;
+                //c.RoutePrefix = string.Empty;
             });
 
             app.UseRouting();
