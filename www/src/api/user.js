@@ -2,15 +2,15 @@ import axios from './index'
 
 export function login(data) {
   return axios.request({
-    url: '/api/login',
-    method: 'post',
-    data
+    url: '/api/token',
+    method: 'get',
+    params: data
   })
 }
 
 export const getUserinfo = () => {
   return axios.request({
-    url: '/api/user'
+    url: '/api/user/current'
   })
 }
 

@@ -54,8 +54,10 @@ export default {
           username,
           password
         }).then(res => { // 调用登录接口，得到返回数据
-          commit('LOGIN', res.token) // 提交登录结果
-          setToken(res.token) // 设置cookie
+          if (res.isSuccess) {
+            commit('LOGIN', res.data.token) // 提交登录结果
+            setToken(res.data.token) // 设置cookie
+          }
           resolve(res) // 返回异步成功方法
         }).catch(err => {
           reject(err) // 返回异步失败方法

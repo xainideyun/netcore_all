@@ -92,11 +92,19 @@ export default {
         if (valid) {
           this.loading = true
           const res = await this.$store.dispatch('user/login', this.loginForm)
-          this.$router.push({ path: this.redirect || '/' }, onComplete => { }, onAbort => { })
+          if (!res.isSuccess) {
+            this.$message.error(res.message)
+          } else {
+            this.$router.push(
+              { path: this.redirect || '/' },
+              onComplete => {},
+              onAbort => {}
+            )
+            this.$message.success('登录成功')
+          }
           this.loading = false
-          this.$message.success('登录成功')
         } else {
-          this.$message.error('登录失败')
+          this.$message.error('验证失败，请正确输入用户名密码')
         }
       })
     }

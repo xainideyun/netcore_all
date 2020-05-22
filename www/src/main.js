@@ -19,7 +19,7 @@ Vue.component('icon-svg', IconSvg)
 
 import '@/styles/index.scss' // 全局样式
 
-if (process.env.NODE_ENV !== 'production') require('./mock') // 非生产环境，使用mockjs模拟
+// if (process.env.NODE_ENV !== 'production') require('./mock') // 非生产环境，使用mockjs模拟
 
 import * as filters from './filters' // 注册全局过滤器
 Object.keys(filters).forEach(key => {
