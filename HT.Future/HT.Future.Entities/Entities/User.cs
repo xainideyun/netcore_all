@@ -40,6 +40,10 @@ namespace HT.Future.Entities
         /// </summary>
         public bool IsActive { get; set; } = true;
         /// <summary>
+        /// 是否是管理员
+        /// </summary>
+        public bool IsAdmin { get; set; }
+        /// <summary>
         /// 地址列表
         /// </summary>
         public virtual ICollection<Address> Addresses { get; set; }

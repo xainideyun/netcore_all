@@ -10,7 +10,7 @@ namespace HT.Future.Application
 {
     [Produces("application/json")]
     [ApiController]
-    [ApiResultFilter]
+    //[ApiResultFilter]
     public class BaseController : ControllerBase
     {
         protected IMapper _mapper;

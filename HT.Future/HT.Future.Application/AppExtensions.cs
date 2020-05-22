@@ -6,10 +6,12 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace HT.Future.Application
 {
@@ -77,6 +79,35 @@ namespace HT.Future.Application
             {
                 throw new Exception("数据库自动迁移失败", ex);
             }
+        }
+
+        public static async void LogInformationAsync<T>(this ILogger<T> logger, string msg)
+        {
+            await Task.Run(() =>
+            {
+                logger.LogInformation(msg);
+            });
+        }
+        public static async void LogDebugAsync<T>(this ILogger<T> logger, string msg)
+        {
+            await Task.Run(() =>
+            {
+                logger.LogDebug(msg);
+            });
+        }
+        public static async void LogWarningAsync<T>(this ILogger<T> logger, string msg)
+        {
+            await Task.Run(() =>
+            {
+                logger.LogWarning(msg);
+            });
+        }
+        public static async void LogErrorAsync<T>(this ILogger<T> logger, string msg)
+        {
+            await Task.Run(() =>
+            {
+                logger.LogError(msg);
+            });
         }
 
     }

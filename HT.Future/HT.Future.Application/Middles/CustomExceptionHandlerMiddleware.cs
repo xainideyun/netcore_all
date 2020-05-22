@@ -48,6 +48,10 @@ namespace HT.Future.Application
             try
             {
                 await _next(context);
+                //if (context.Request.Method.ToLower() == "get" && context.Response.StatusCode == 404)
+                //{
+                //    context.Response.Redirect("/");
+                //}
             }
             catch (AppException exception)
             {

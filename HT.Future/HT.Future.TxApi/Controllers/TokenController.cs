@@ -40,11 +40,11 @@ namespace HT.Future.TxApi.Controllers
             var user = await _service.GetByUserNameAsync(username);
             if (user == null)
             {
-                return Content("用户不存在");
+                return BadRequest("用户不存在");
             }
             if (user.PasswordHash != password.ToMd5())
             {
-                return Content("密码不正确");
+                return BadRequest("密码不正确");
             }
 
             var claims = new[]
@@ -57,7 +57,7 @@ namespace HT.Future.TxApi.Controllers
             var signKey = new SymmetricSecurityKey(_jwtOption.SecurityKey.ToBytes());
             var token = new JwtSecurityToken(_jwtOption.Issuer, _jwtOption.Audience, claims, expires: DateTime.Now.AddSeconds(_jwtOption.ExpireSeconds), signingCredentials: new SigningCredentials(signKey, SecurityAlgorithms.HmacSha256));
 
-            _logger.LogWarning($"用户{user.FullName}于{DateTime.Now:yyyy-MM-dd HH:mm:ss}登录");
+            _logger.LogInformationAsync($"用户{user.FullName}于{DateTime.Now:yyyy-MM-dd HH:mm:ss}登录");
             return new { token = new JwtSecurityTokenHandler().WriteToken(token) };
         }
 

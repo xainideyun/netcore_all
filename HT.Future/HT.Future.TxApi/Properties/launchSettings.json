@@ -4,7 +4,7 @@
     "HT.Future.TxApi": {
       "commandName": "Project",
       "launchBrowser": false,
-      //"launchUrl": "index.html",
+      "launchUrl": "default.html",
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
