@@ -27,5 +27,6 @@ namespace HT.Future.Entities
         /// 父级路由实体
         /// </summary>
         public virtual SysFunc Parent { get; set; }
+        public virtual ICollection<SysFuncRole> SysFuncRoles { get; set; }
     }
 }

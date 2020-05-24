@@ -14,11 +14,15 @@ namespace HT.Future.Entities
     /// 用户表
     /// </summary>
     [Table("User")]
-    public class User: IdentityUser<int>, IEntity
+    public class User : IdentityUser<int>, IEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public override int Id { get => base.Id; set => base.Id = value; }
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime CreateTime { get; set; }
         /// <summary>
         /// 用户全名
         /// </summary>
@@ -44,9 +48,14 @@ namespace HT.Future.Entities
         /// </summary>
         public bool IsAdmin { get; set; }
         /// <summary>
+        /// 最后登录时间
+        /// </summary>
+        public DateTime? LastLoginTime { get; set; }
+        /// <summary>
         /// 地址列表
         /// </summary>
         public virtual ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<RoleUser> RoleUsers { get; set; }
     }
 
     /// <summary>

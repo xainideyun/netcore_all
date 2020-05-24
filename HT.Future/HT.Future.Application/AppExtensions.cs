@@ -77,7 +77,7 @@ namespace HT.Future.Application
             }
             catch (Exception ex)
             {
-                throw new Exception("数据库自动迁移失败", ex);
+                throw new Exception("数据库自动迁移失败：" + ex.ToString(), ex);
             }
         }
 
