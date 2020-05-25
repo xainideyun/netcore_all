@@ -8,11 +8,11 @@ namespace HT.Future.Entities
     /// <summary>
     /// 权限与角色关联表
     /// </summary>
-    [Table("SysFuncRole")]
-    public class SysFuncRole : BaseEntity
+    [Table("MenuRole")]
+    public class MenuRole : BaseEntity
     {
         public int SysFuncId { get; set; }
-        public virtual SysFunc SysFunc { get; set; }
+        public virtual Menu SysFunc { get; set; }
         public int RoleId { get; set; }
         public virtual Role Role { get; set; }
     }

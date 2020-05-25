@@ -52,7 +52,8 @@ namespace HT.Future.TxApi.Controllers
                 new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                 new Claim(JwtRegisteredClaimNames.GivenName, user.FullName),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString().ToLower())
+                //new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString().ToLower()),
+                new Claim(JwtRegisteredClaimNames.Aud, user.IsAdmin ? "1" : "0")
             };
             var signKey = new SymmetricSecurityKey(_jwtOption.SecurityKey.ToBytes());
             var token = new JwtSecurityToken(_jwtOption.Issuer, _jwtOption.Audience, claims, expires: DateTime.Now.AddSeconds(_jwtOption.ExpireSeconds), signingCredentials: new SigningCredentials(signKey, SecurityAlgorithms.HmacSha256));

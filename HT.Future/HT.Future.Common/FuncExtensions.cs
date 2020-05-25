@@ -111,6 +111,23 @@ namespace HT.Future.Common
         }
 
         /// <summary>
+        /// 注册程序集中所有实现ISeed接口的种子数据
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        /// <param name="assemblies"></param>
+        public static void RegisterAllSeeds(this ModelBuilder modelBuilder, params Assembly[] assemblies)
+        {
+            IEnumerable<Type> types = assemblies.SelectMany(a => a.GetExportedTypes())
+                .Where(c => c.IsClass && !c.IsAbstract && c.IsPublic && typeof(ISeed).IsAssignableFrom(c));
+            foreach (var type in types)
+            {
+                //Console.WriteLine(type.FullName);
+                var seed = Activator.CreateInstance(type) as ISeed;
+                seed.SetSeed(modelBuilder);
+            }
+        }
+
+        /// <summary>
         /// 获取byte[]
         /// </summary>
         /// <param name="str"></param>

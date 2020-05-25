@@ -40,7 +40,7 @@ namespace HT.Future.Entities
         /// <summary>
         /// 角色与系统功能的关系
         /// </summary>
-        public virtual ICollection<SysFuncRole> SysFuncRoles { get; set; }
+        public virtual ICollection<MenuRole> SysFuncRoles { get; set; }
     }
 
 

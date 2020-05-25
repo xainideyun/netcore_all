@@ -55,6 +55,9 @@ namespace HT.Future.Entities
         /// 地址列表
         /// </summary>
         public virtual ICollection<Address> Addresses { get; set; }
+        /// <summary>
+        /// 用户所绑定的角色关系
+        /// </summary>
         public virtual ICollection<RoleUser> RoleUsers { get; set; }
     }
 

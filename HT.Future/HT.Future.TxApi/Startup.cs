@@ -97,7 +97,7 @@ namespace HT.Future.TxApi
             //services.AddDbContext<HtDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("mysql"), a => a.MigrationsAssembly(typeof(HtDbContext).Assembly.FullName)));
 
             services.AddDbContext<HtDbContext>(options => options.UseMySQL(Configuration["ConnectionStrings:mysql"], b => b.MigrationsAssembly(typeof(HtDbContext).Assembly.FullName)));
-            services.Migration();
+            //services.Migration();
 
             #endregion
 

@@ -17,6 +17,11 @@ namespace HT.Future.Service
             _logger = logger;
         }
 
+        public async Task<object> GetUserMenuAuthAsync(int userId)
+        {
+            return null;
+        }
+
         public async Task<List<RoleUser>> AddRoleUsersAsync(IEnumerable<RoleUser> roleUsers)
         {
             await DbContext.Set<RoleUser>().AddRangeAsync(roleUsers);

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HT.Future.Entities.Migrations
 {
     [DbContext(typeof(HtDbContext))]
-    [Migration("20200524143222_aaa")]
-    partial class aaa
+    [Migration("20200525083232_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -65,6 +65,104 @@ namespace HT.Future.Entities.Migrations
                         });
                 });
 
+            modelBuilder.Entity("HT.Future.Entities.Menu", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("Menu");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "good",
+                            Title = "商品管理"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "settings",
+                            Title = "系统设置"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "goodList",
+                            ParentId = 1,
+                            Title = "商品列表"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "goodDetail",
+                            ParentId = 1,
+                            Title = "商品详情"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "user",
+                            ParentId = 2,
+                            Title = "个人中心"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "order",
+                            Title = "订单管理"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "sys",
+                            ParentId = 2,
+                            Title = "配置"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "myOrder",
+                            ParentId = 6,
+                            Title = "我的订单"
+                        });
+                });
+
+            modelBuilder.Entity("HT.Future.Entities.MenuRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SysFuncId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("SysFuncId");
+
+                    b.ToTable("MenuRole");
+                });
+
             modelBuilder.Entity("HT.Future.Entities.NLogInfo", b =>
                 {
                     b.Property<int>("Id")
@@ -109,7 +207,12 @@ namespace HT.Future.Entities.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Role");
                 });
@@ -133,91 +236,6 @@ namespace HT.Future.Entities.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("RoleUser");
-                });
-
-            modelBuilder.Entity("HT.Future.Entities.SysFunc", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ParentId");
-
-                    b.ToTable("SysFunc");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "good",
-                            Title = "商品管理"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "settings",
-                            Title = "系统设置"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "goodList",
-                            ParentId = 1,
-                            Title = "商品列表"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "goodDetail",
-                            ParentId = 1,
-                            Title = "商品详情"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "user",
-                            ParentId = 2,
-                            Title = "个人中心"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "sys",
-                            ParentId = 2,
-                            Title = "配置"
-                        });
-                });
-
-            modelBuilder.Entity("HT.Future.Entities.SysFuncRole", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SysFuncId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("SysFuncId");
-
-                    b.ToTable("SysFuncRole");
                 });
 
             modelBuilder.Entity("HT.Future.Entities.User", b =>
@@ -305,8 +323,8 @@ namespace HT.Future.Entities.Migrations
                             AccessFailedCount = 0,
                             Age = 21,
                             Avator = "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png",
-                            ConcurrencyStamp = "b524ee9e-101c-4abd-a13b-036a4b7766aa",
-                            CreateTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ConcurrencyStamp = "a8b75add-3ffa-4080-998c-934037dd9f9f",
+                            CreateTime = new DateTime(2020, 5, 25, 16, 32, 32, 225, DateTimeKind.Local).AddTicks(2936),
                             EmailConfirmed = false,
                             FullName = "超级管理员",
                             Gender = 0,
@@ -316,45 +334,7 @@ namespace HT.Future.Entities.Migrations
                             PasswordHash = "670b14728ad9902aecba32e22fa4f6bd",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
-                            UserName = "super_admin"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AccessFailedCount = 0,
-                            Age = 34,
-                            Avator = "https://avatars0.githubusercontent.com/u/20942571?s=460&v=4",
-                            ConcurrencyStamp = "6f48ac90-7588-4a62-a81c-c7c00a1bb1ac",
-                            CreateTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EmailConfirmed = false,
-                            FullName = "管理员",
-                            Gender = 0,
-                            IsActive = true,
-                            IsAdmin = true,
-                            LockoutEnabled = false,
-                            PasswordHash = "670b14728ad9902aecba32e22fa4f6bd",
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
                             UserName = "admin"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AccessFailedCount = 0,
-                            Age = 34,
-                            Avator = "https://avatars0.githubusercontent.com/u/20942571?s=460&v=4",
-                            ConcurrencyStamp = "03b930b8-2a4b-4a50-a304-d20fa1c5a68d",
-                            CreateTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EmailConfirmed = false,
-                            FullName = "张三",
-                            Gender = 0,
-                            IsActive = true,
-                            IsAdmin = false,
-                            LockoutEnabled = false,
-                            PasswordHash = "670b14728ad9902aecba32e22fa4f6bd",
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserName = "zhangsan"
                         });
                 });
 
@@ -364,6 +344,37 @@ namespace HT.Future.Entities.Migrations
                         .WithMany("Addresses")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.SetNull);
+                });
+
+            modelBuilder.Entity("HT.Future.Entities.Menu", b =>
+                {
+                    b.HasOne("HT.Future.Entities.Menu", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
+                });
+
+            modelBuilder.Entity("HT.Future.Entities.MenuRole", b =>
+                {
+                    b.HasOne("HT.Future.Entities.Role", "Role")
+                        .WithMany("SysFuncRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HT.Future.Entities.Menu", "SysFunc")
+                        .WithMany("SysFuncRoles")
+                        .HasForeignKey("SysFuncId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HT.Future.Entities.Role", b =>
+                {
+                    b.HasOne("HT.Future.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("HT.Future.Entities.RoleUser", b =>
@@ -377,28 +388,6 @@ namespace HT.Future.Entities.Migrations
                     b.HasOne("HT.Future.Entities.User", "User")
                         .WithMany("RoleUsers")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("HT.Future.Entities.SysFunc", b =>
-                {
-                    b.HasOne("HT.Future.Entities.SysFunc", "Parent")
-                        .WithMany()
-                        .HasForeignKey("ParentId");
-                });
-
-            modelBuilder.Entity("HT.Future.Entities.SysFuncRole", b =>
-                {
-                    b.HasOne("HT.Future.Entities.Role", "Role")
-                        .WithMany("SysFuncRoles")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HT.Future.Entities.SysFunc", "SysFunc")
-                        .WithMany("SysFuncRoles")
-                        .HasForeignKey("SysFuncId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

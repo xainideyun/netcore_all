@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HT.Future.Application;
+using HT.Future.Entities;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
@@ -20,7 +23,7 @@ namespace HT.Future.TxApi
             {
                 CreateHostBuilder(args)
                     .Build()
-                    //.Migration()
+                    .Migration()
                     .Run();
             }
             catch (Exception exception)
@@ -47,6 +50,6 @@ namespace HT.Future.TxApi
                 })
                 .UseNLog();
 
-        
+
     }
 }

@@ -19,7 +19,7 @@ export const constantRoutes = [{
       component: () => import(`@/views/Home`),
       meta: {
         title: '首页',
-        icon: 'officeicon_excelco',
+        icon: 'home',
         affix: true
       }
     }]
@@ -68,6 +68,7 @@ export const asyncRoutes = [{
     name: 'good',
     component: Layout,
     redirect: 'noRedirect',
+    alwaysShow: true,
     meta: {
       title: '商品管理'
     },

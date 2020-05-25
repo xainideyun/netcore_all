@@ -67,6 +67,21 @@ namespace HT.Future.Application
             }
         }
 
+        private bool isAdmin;
+        /// <summary>
+        /// 是否是管理员
+        /// </summary>
+        public bool IsAdmin
+        {
+            get
+            {
+                if (isAdmin) return isAdmin;
+                var flag = GetJwtClaim(JwtRegisteredClaimNames.Aud);
+                isAdmin = flag == "1";
+                return isAdmin;
+            }
+        }
+
 
         private string GetJwtClaim(string field)
         {

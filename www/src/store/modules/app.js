@@ -36,7 +36,7 @@ export function filterAsyncRoutes(routes, roles) {
  */
 function hasPermission(roles, route) {
   if (!route.name) return false // 如果不存在name，则直接返回无权限
-  if (!roles.hasOwnProperty(route.name)) return true // 如果返回的权限中不存在指定的name，则直接返回有权限
+  if (!roles.hasOwnProperty(route.name) || route.alwaysShow) return true // 如果返回的权限中不存在指定的name，则直接返回有权限
   return roles[route.name]
 }
 
@@ -127,7 +127,7 @@ export default {
     }, roles) {
       return new Promise(resolve => { // 此处根据角色信息筛选可用的路由表
         let accessedRoutes
-        if (config.openRoleSystem) {
+        if (config.openRoleSystem && !roles.all) {  // roles.all：如果返回的角色信息all为true，则加载所有动态路由
           accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
         } else {
           accessedRoutes = asyncRoutes

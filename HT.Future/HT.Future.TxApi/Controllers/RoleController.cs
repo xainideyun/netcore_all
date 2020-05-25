@@ -26,6 +26,22 @@ namespace HT.Future.TxApi.Controllers
             this._service = service;
         }
 
+        /// <summary>
+        /// 获取当前登录用户的可访问菜单
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ApiResult<object>> MenuAuth()
+        {
+            if (IsAdmin) return new { all = true };
+            return await _service.GetUserMenuAuthAsync(UserId);
+        }
+
+        /// <summary>
+        /// 新增一个角色
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ApiResult<Role>> Add([FromBody]JObject obj)
         {
@@ -34,6 +50,11 @@ namespace HT.Future.TxApi.Controllers
             return role;
         }
 
+        /// <summary>
+        /// 为当前用户绑定角色
+        /// </summary>
+        /// <param name="roleIds"></param>
+        /// <returns></returns>
         [HttpPost("bind")]
         public async Task<ApiResult> BindRole([FromBody]List<int> roleIds)
         {

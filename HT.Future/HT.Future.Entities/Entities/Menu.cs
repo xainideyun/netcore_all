@@ -8,8 +8,8 @@ namespace HT.Future.Entities
     /// <summary>
     /// 系统功能表
     /// </summary>
-    [Table("SysFunc")]
-    public class SysFunc : BaseEntity
+    [Table("Menu")]
+    public class Menu : BaseEntity
     {
         /// <summary>
         /// 路由名称
@@ -26,7 +26,10 @@ namespace HT.Future.Entities
         /// <summary>
         /// 父级路由实体
         /// </summary>
-        public virtual SysFunc Parent { get; set; }
-        public virtual ICollection<SysFuncRole> SysFuncRoles { get; set; }
+        public virtual Menu Parent { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public virtual ICollection<MenuRole> SysFuncRoles { get; set; }
     }
 }
