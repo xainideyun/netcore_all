@@ -136,12 +136,28 @@ namespace HT.Future.IService
         /// <param name="saveNow"></param>
         void Update(TEntity entity, bool saveNow = true);
         /// <summary>
+        /// 更新实体对象
+        /// </summary>
+        /// <param name="entity">实体对象</param>
+        /// <param name="fileds">需要更新的字段</param>
+        /// <param name="saveNow">是否立即持久化</param>
+        /// <returns></returns>
+        void Update(TEntity entity, IEnumerable<string> fileds, bool saveNow = true);
+        /// <summary>
         /// 更新实体对象（异步）
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="saveNow"></param>
         /// <returns></returns>
         Task UpdateAsync(TEntity entity, bool saveNow = true);
+        /// <summary>
+        /// 更新实体对象（异步）
+        /// </summary>
+        /// <param name="entity">实体对象</param>
+        /// <param name="fileds">需要更新的字段</param>
+        /// <param name="saveNow">是否立即持久化</param>
+        /// <returns></returns>
+        Task UpdateAsync(TEntity entity, IEnumerable<string> fileds, bool saveNow = true);
         /// <summary>
         /// 批量更新实体对象
         /// </summary>

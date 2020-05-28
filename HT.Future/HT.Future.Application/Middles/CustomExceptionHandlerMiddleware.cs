@@ -96,13 +96,13 @@ namespace HT.Future.Application
             }
             catch (Exception exception)
             {
-                _logger.LogError(exception, exception.Message);
+                _logger.LogError(exception, exception.InnerException?.Message ?? exception.Message);
 
                 if (_env.IsDevelopment())
                 {
                     var dic = new Dictionary<string, string>
                     {
-                        ["Exception"] = exception.Message,
+                        ["Exception"] = exception.InnerException?.Message ?? exception.Message,
                         ["StackTrace"] = exception.StackTrace,
                     };
                     message = JsonConvert.SerializeObject(dic);

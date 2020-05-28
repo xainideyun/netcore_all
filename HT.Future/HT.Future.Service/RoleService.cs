@@ -17,17 +17,34 @@ namespace HT.Future.Service
             _logger = logger;
         }
 
-        public async Task<object> GetUserMenuAuthAsync(int userId)
+        public async Task<List<Role>> GetAllRolesAsync()
         {
-            return null;
+            return await TableNoTracking.Include(a => a.Routes).ToListAsync();
         }
 
-        public async Task<List<RoleUser>> AddRoleUsersAsync(IEnumerable<RoleUser> roleUsers)
+        public async Task<Role> UpdateRoleAsync(Role role)
         {
-            await DbContext.Set<RoleUser>().AddRangeAsync(roleUsers);
-            await DbContext.SaveChangesAsync();
-            return roleUsers.ToList();
+            var routes = await DbContext.Set<AccessAuthority>()
+                .Where(a => a.RoleId == role.Id)
+                .Select(a => new AccessAuthority { Id = a.Id })
+                .ToListAsync();
+            DbContext.RemoveRange(routes);
+            DbContext.SaveChanges();
+            role.ModifyTime = DateTime.Now;
+            await UpdateAsync(role);
+            return role;
         }
+        //public async Task<object> GetUserMenuAuthAsync(int userId)
+        //{
+        //    return null;
+        //}
+
+        //public async Task<List<RoleUser>> AddRoleUsersAsync(IEnumerable<RoleUser> roleUsers)
+        //{
+        //    await DbContext.Set<RoleUser>().AddRangeAsync(roleUsers);
+        //    await DbContext.SaveChangesAsync();
+        //    return roleUsers.ToList();
+        //}
 
     }
 }

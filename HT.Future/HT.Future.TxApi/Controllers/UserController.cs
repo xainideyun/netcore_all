@@ -56,7 +56,18 @@ namespace HT.Future.TxApi.Controllers
         public async Task<ApiResult<object>> GetCurrentUser()
         {
             await Task.CompletedTask;
-            return new { UserId, Name, UserName };
+            return new { UserId, Name, UserName, IsAdmin };
+        }
+
+        /// <summary>
+        /// 获取用户可访问的路由
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("role")]
+        public async Task<ApiResult<object>> GetUserAccesses()
+        {
+            await Task.CompletedTask;
+            return new { all = true };
         }
 
     }

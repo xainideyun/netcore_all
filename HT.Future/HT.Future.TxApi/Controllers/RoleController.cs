@@ -27,27 +27,54 @@ namespace HT.Future.TxApi.Controllers
         }
 
         /// <summary>
-        /// 获取当前登录用户的可访问菜单
+        /// 获取系统所有角色
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ApiResult<object>> MenuAuth()
+        public async Task<ApiResult<List<Role>>> GetRoles()
         {
-            if (IsAdmin) return new { all = true };
-            return await _service.GetUserMenuAuthAsync(UserId);
+            return await _service.GetAllRolesAsync();
         }
 
         /// <summary>
         /// 新增一个角色
         /// </summary>
-        /// <param name="obj"></param>
+        /// <param name="role"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ApiResult<Role>> Add([FromBody]JObject obj)
+        public async Task<ApiResult<Role>> Add([FromBody]Role role)
         {
-            var role = new Role { CanDelete = true, CreateTime = DateTime.Now, Name = obj["name"].Value<string>() };
+            role.UserId = UserId;
+            role.CreateTime = DateTime.Now;
             await _service.AddAsync(role);
             return role;
+        }
+
+        /// <summary>
+        /// 更新角色
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="role"></param>
+        /// <returns></returns>
+        [HttpPut("{id}")]
+        public async Task<ApiResult<Role>> Update(int id, [FromBody]Role role)
+        {
+            await _service.UpdateRoleAsync(role);
+            return role;
+        }
+
+        /// <summary>
+        /// 删除角色
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public async Task<ApiResult> Delete(int id)
+        {
+            var role = new Role { Id = id };
+            //_service.Attach(role);
+            await _service.DeleteAsync(role);
+            return Ok();
         }
 
         /// <summary>
@@ -58,8 +85,9 @@ namespace HT.Future.TxApi.Controllers
         [HttpPost("bind")]
         public async Task<ApiResult> BindRole([FromBody]List<int> roleIds)
         {
+            await Task.CompletedTask;
             var arr = roleIds.Select(a => new RoleUser { RoleId = a, UserId = UserId });
-            await _service.AddRoleUsersAsync(arr);
+            //await _service.AddRoleUsersAsync(arr);
             return Ok();
         }
 

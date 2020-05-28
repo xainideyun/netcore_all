@@ -55,6 +55,17 @@ namespace HT.Future.Service
                 await DbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
+        public virtual async Task UpdateAsync(TEntity entity, IEnumerable<string> fileds, bool saveNow = true)
+        {
+            Assert.NotNull(entity, nameof(entity));
+            var entry = DbContext.Entry(entity);
+            fileds.ForEach(item => entry.Property(item).IsModified = true);
+            if (saveNow)
+            {
+                await DbContext.SaveChangesAsync().ConfigureAwait(false);
+            }
+        }
+
         public virtual async Task UpdateRangeAsync(IEnumerable<TEntity> entities, bool saveNow = true)
         {
             Assert.NotNull(entities, nameof(entities));
@@ -108,6 +119,17 @@ namespace HT.Future.Service
             Entities.Update(entity);
             if (saveNow)
                 DbContext.SaveChanges();
+        }
+
+        public virtual void Update(TEntity entity, IEnumerable<string> fileds, bool saveNow = true)
+        {
+            Assert.NotNull(entity, nameof(entity));
+            var entry = DbContext.Entry(entity);
+            fileds.ForEach(item => entry.Property(item).IsModified = true);
+            if (saveNow)
+            {
+                DbContext.SaveChanges();
+            }
         }
 
         public virtual void UpdateRange(IEnumerable<TEntity> entities, bool saveNow = true)

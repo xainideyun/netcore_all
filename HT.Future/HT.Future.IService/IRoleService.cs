@@ -9,16 +9,15 @@ namespace HT.Future.IService
     public interface IRoleService : IBaseService<Role>
     {
         /// <summary>
-        /// 获取用户菜单权限
+        /// 获取系统所有角色
         /// </summary>
-        /// <param name="userId"></param>
         /// <returns></returns>
-        Task<object> GetUserMenuAuthAsync(int userId);
+        Task<List<Role>> GetAllRolesAsync();
         /// <summary>
-        /// 绑定用户角色关系
+        /// 更新角色
         /// </summary>
-        /// <param name="roleUsers"></param>
+        /// <param name="role"></param>
         /// <returns></returns>
-        Task<List<RoleUser>> AddRoleUsersAsync(IEnumerable<RoleUser> roleUsers);
+        Task<Role> UpdateRoleAsync(Role role);
     }
 }

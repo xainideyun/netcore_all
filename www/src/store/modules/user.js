@@ -74,7 +74,7 @@ export default {
       return new Promise(async (resolve, reject) => {
         try {
           const res = await getUserinfo()
-          commit('SET_USERINFO', res)
+          commit('SET_USERINFO', res.data)
           const roles = await getRole()
           resolve(roles)
         } catch (err) {

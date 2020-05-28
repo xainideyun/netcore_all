@@ -9,27 +9,6 @@ namespace HT.Future.Entities.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Menu",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true),
-                    ParentId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Menu", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Menu_Menu_ParentId",
-                        column: x => x.ParentId,
-                        principalTable: "Menu",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "NLogInfo",
                 columns: table => new
                 {
@@ -113,9 +92,11 @@ namespace HT.Future.Entities.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
+                    Key = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
                     CreateTime = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
-                    CanDelete = table.Column<bool>(nullable: false)
+                    ModifyTime = table.Column<DateTime>(nullable: true),
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -129,29 +110,30 @@ namespace HT.Future.Entities.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MenuRole",
+                name: "AccessAuthority",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    SysFuncId = table.Column<int>(nullable: false),
-                    RoleId = table.Column<int>(nullable: false)
+                    Name = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: true),
+                    RoleId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MenuRole", x => x.Id);
+                    table.PrimaryKey("PK_AccessAuthority", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MenuRole_Role_RoleId",
+                        name: "FK_AccessAuthority_Role_RoleId",
                         column: x => x.RoleId,
                         principalTable: "Role",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_MenuRole_Menu_SysFuncId",
-                        column: x => x.SysFuncId,
-                        principalTable: "Menu",
+                        name: "FK_AccessAuthority_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -181,56 +163,29 @@ namespace HT.Future.Entities.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Menu",
-                columns: new[] { "Id", "Name", "ParentId", "Title" },
-                values: new object[,]
-                {
-                    { 1, "good", null, "商品管理" },
-                    { 2, "settings", null, "系统设置" },
-                    { 6, "order", null, "订单管理" }
-                });
-
-            migrationBuilder.InsertData(
                 table: "User",
                 columns: new[] { "Id", "AccessFailedCount", "Age", "Avator", "ConcurrencyStamp", "CreateTime", "Email", "EmailConfirmed", "FullName", "Gender", "IsActive", "IsAdmin", "LastLoginTime", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { 1, 0, 21, "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png", "a8b75add-3ffa-4080-998c-934037dd9f9f", new DateTime(2020, 5, 25, 16, 32, 32, 225, DateTimeKind.Local).AddTicks(2936), null, false, "超级管理员", 0, true, true, null, false, null, null, null, "670b14728ad9902aecba32e22fa4f6bd", null, false, null, false, "admin" });
+                values: new object[] { 1, 0, 21, "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png", "06ec1a38-e410-4705-9443-8f2e504775a0", new DateTime(2020, 5, 28, 15, 16, 0, 524, DateTimeKind.Local).AddTicks(3241), null, false, "超级管理员", 0, true, true, null, false, null, null, null, "670b14728ad9902aecba32e22fa4f6bd", null, false, null, false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "Address",
                 columns: new[] { "Id", "Contacts", "Detail", "Lat", "Lng", "Phone", "Title", "UserId" },
                 values: new object[] { 1, null, "湖北省武汉市珞瑜路12号", 1.0, 2.0, "13900000000", "武汉大学", 1 });
 
-            migrationBuilder.InsertData(
-                table: "Menu",
-                columns: new[] { "Id", "Name", "ParentId", "Title" },
-                values: new object[,]
-                {
-                    { 3, "goodList", 1, "商品列表" },
-                    { 4, "goodDetail", 1, "商品详情" },
-                    { 5, "user", 2, "个人中心" },
-                    { 7, "sys", 2, "配置" },
-                    { 8, "myOrder", 6, "我的订单" }
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_AccessAuthority_RoleId",
+                table: "AccessAuthority",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AccessAuthority_UserId",
+                table: "AccessAuthority",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Address_UserId",
                 table: "Address",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Menu_ParentId",
-                table: "Menu",
-                column: "ParentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MenuRole_RoleId",
-                table: "MenuRole",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MenuRole_SysFuncId",
-                table: "MenuRole",
-                column: "SysFuncId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Role_UserId",
@@ -251,19 +206,16 @@ namespace HT.Future.Entities.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Address");
+                name: "AccessAuthority");
 
             migrationBuilder.DropTable(
-                name: "MenuRole");
+                name: "Address");
 
             migrationBuilder.DropTable(
                 name: "NLogInfo");
 
             migrationBuilder.DropTable(
                 name: "RoleUser");
-
-            migrationBuilder.DropTable(
-                name: "Menu");
 
             migrationBuilder.DropTable(
                 name: "Role");

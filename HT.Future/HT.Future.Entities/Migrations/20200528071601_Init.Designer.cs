@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HT.Future.Entities.Migrations
 {
     [DbContext(typeof(HtDbContext))]
-    [Migration("20200525083232_Init")]
+    [Migration("20200528071601_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,6 +18,30 @@ namespace HT.Future.Entities.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("HT.Future.Entities.AccessAuthority", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AccessAuthority");
+                });
 
             modelBuilder.Entity("HT.Future.Entities.Address", b =>
                 {
@@ -65,104 +89,6 @@ namespace HT.Future.Entities.Migrations
                         });
                 });
 
-            modelBuilder.Entity("HT.Future.Entities.Menu", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ParentId");
-
-                    b.ToTable("Menu");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "good",
-                            Title = "商品管理"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "settings",
-                            Title = "系统设置"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "goodList",
-                            ParentId = 1,
-                            Title = "商品列表"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "goodDetail",
-                            ParentId = 1,
-                            Title = "商品详情"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "user",
-                            ParentId = 2,
-                            Title = "个人中心"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "order",
-                            Title = "订单管理"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "sys",
-                            ParentId = 2,
-                            Title = "配置"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "myOrder",
-                            ParentId = 6,
-                            Title = "我的订单"
-                        });
-                });
-
-            modelBuilder.Entity("HT.Future.Entities.MenuRole", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SysFuncId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("SysFuncId");
-
-                    b.ToTable("MenuRole");
-                });
-
             modelBuilder.Entity("HT.Future.Entities.NLogInfo", b =>
                 {
                     b.Property<int>("Id")
@@ -198,10 +124,16 @@ namespace HT.Future.Entities.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<bool>("CanDelete")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Key")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ModifyTime")
                         .HasColumnType("datetime");
 
                     b.Property<string>("Name")
@@ -323,8 +255,8 @@ namespace HT.Future.Entities.Migrations
                             AccessFailedCount = 0,
                             Age = 21,
                             Avator = "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png",
-                            ConcurrencyStamp = "a8b75add-3ffa-4080-998c-934037dd9f9f",
-                            CreateTime = new DateTime(2020, 5, 25, 16, 32, 32, 225, DateTimeKind.Local).AddTicks(2936),
+                            ConcurrencyStamp = "06ec1a38-e410-4705-9443-8f2e504775a0",
+                            CreateTime = new DateTime(2020, 5, 28, 15, 16, 0, 524, DateTimeKind.Local).AddTicks(3241),
                             EmailConfirmed = false,
                             FullName = "超级管理员",
                             Gender = 0,
@@ -338,34 +270,23 @@ namespace HT.Future.Entities.Migrations
                         });
                 });
 
+            modelBuilder.Entity("HT.Future.Entities.AccessAuthority", b =>
+                {
+                    b.HasOne("HT.Future.Entities.Role", "Role")
+                        .WithMany("Routes")
+                        .HasForeignKey("RoleId");
+
+                    b.HasOne("HT.Future.Entities.User", "User")
+                        .WithMany("AccessAuthorities")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("HT.Future.Entities.Address", b =>
                 {
                     b.HasOne("HT.Future.Entities.User", "User")
                         .WithMany("Addresses")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.SetNull);
-                });
-
-            modelBuilder.Entity("HT.Future.Entities.Menu", b =>
-                {
-                    b.HasOne("HT.Future.Entities.Menu", "Parent")
-                        .WithMany()
-                        .HasForeignKey("ParentId");
-                });
-
-            modelBuilder.Entity("HT.Future.Entities.MenuRole", b =>
-                {
-                    b.HasOne("HT.Future.Entities.Role", "Role")
-                        .WithMany("SysFuncRoles")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HT.Future.Entities.Menu", "SysFunc")
-                        .WithMany("SysFuncRoles")
-                        .HasForeignKey("SysFuncId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("HT.Future.Entities.Role", b =>
@@ -386,7 +307,7 @@ namespace HT.Future.Entities.Migrations
                         .IsRequired();
 
                     b.HasOne("HT.Future.Entities.User", "User")
-                        .WithMany("RoleUsers")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

@@ -1,10 +1,17 @@
 import Mock from 'mockjs'
-import { baseURL } from '../config'
+// import { baseURL } from '../config'
 import { login, getUserinfo, getRole } from './response/user'
 
-Mock.mock(`${baseURL}/api/login`, login)
-Mock.mock(`${baseURL}/api/user`, getUserinfo)
-Mock.mock(`${baseURL}/api/role`, getRole)
+function mock(pattern, method, func) {
+    if (typeof method === 'function') {
+        func = method
+        method = 'get'
+    }
+    Mock.mock(pattern, method, func)
+}
 
+mock(/\/api\/token?/, login)
+mock(/\/api\/user\/current/, getUserinfo)
+mock(/\/api\/user\/role/, getRole)
 
 export default Mock

@@ -43,7 +43,7 @@ router.beforeEach(function (to, from, next) {
         store.dispatch('user/getUser')
           .then(res => {
             // 此处获得用户信息后，需要根据用户信息确定菜单权限
-            store.dispatch('app/generateRoutes', res).then(res => {
+            store.dispatch('app/generateRoutes', res.data).then(res => {
               router.addRoutes(res)
               next({ ...to, replace: true })
             })

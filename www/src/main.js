@@ -8,7 +8,16 @@ import store from './store' // vuex对象
 import ElementUI from 'element-ui' // ElementUI
 import './styles/element-variables.scss' // ElementUI样式
 Vue.use(ElementUI)
-Vue.prototype.$message = ElementUI.Message
+// Vue.prototype.$message = ElementUI.Message
+// Vue.prototype.$notify = ElementUI.Notification
+Vue.prototype.$$loading = function(text = 'Loading') {
+  return ElementUI.Loading.service({
+    lock: true,
+    text,
+    spinner: 'el-icon-loading',
+    background: 'rgba(0, 0, 0, 0.7)'
+  })
+}
 
 import '@/assets/fonts/iconfont.css' // 使用FontClass使用icon
 import IconFont from '_c/icon-font'

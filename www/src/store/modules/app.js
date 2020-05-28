@@ -16,14 +16,26 @@ import {
 export function filterAsyncRoutes(routes, roles) {
   const res = []
   routes.forEach(route => {
-    const tmp = {
+    const tmp = { // 拷贝一份路由对象
       ...route
     }
-    if (hasPermission(roles, tmp)) {
-      if (tmp.children) {
-        tmp.children = filterAsyncRoutes(tmp.children, roles)
+    // if (hasPermission(roles, tmp)) {
+    //   if (tmp.children) {
+    //     tmp.children = filterAsyncRoutes(tmp.children, roles)
+    //   }
+    //   res.push(tmp)
+    // }
+
+    if (tmp.children && tmp.children.length > 0) {
+      tmp.children = filterAsyncRoutes(tmp.children, roles)
+      if (tmp.children.length > 0) {  // 如果此菜单存在有权限的子菜单，则加入路由表
+        res.push(tmp)
       }
-      res.push(tmp)
+    } else {
+      // 没有子菜单，则判断用户是否对此菜单拥有权限
+      if (hasPermission(roles, tmp)) {
+        res.push(tmp)
+      }
     }
   })
   return res
@@ -35,9 +47,28 @@ export function filterAsyncRoutes(routes, roles) {
  * @param { Object } route 路由
  */
 function hasPermission(roles, route) {
-  if (!route.name) return false // 如果不存在name，则直接返回无权限
-  if (!roles.hasOwnProperty(route.name) || route.alwaysShow) return true // 如果返回的权限中不存在指定的name，则直接返回有权限
+  if (!route.name) return false // 如果路由不存在name，则直接返回无权限
+  if (route.always) return true // 如果路由always为true，则返回有权限
+  if (!roles.hasOwnProperty(route.name)) return true // 如果返回的权限中不存在指定的name，则返回有权限
   return roles[route.name]
+}
+
+/**
+ * 筛选无需隐藏的路由
+ */
+function filterNotHiddenRoutes(routes) {
+  let arr = []
+  routes.forEach(route => {
+    if (route.hidden) return    // 如果设置为隐藏，则直接返回
+    let tmp = {
+      ...route
+    }
+    if (tmp.children) {
+      tmp.children = filterNotHiddenRoutes(route.children)
+    }
+    arr.push(tmp)
+  })
+  return arr
 }
 
 export default {
@@ -50,7 +81,8 @@ export default {
     device: 'desktop', // 登录设备
     size: Cookies.get('size') || 'medium', // 尺寸
     routes: [], // 当前正在使用的路由表
-    addRoutes: [] // 新增的路由表
+    addRoutes: [], // 新增的路由表
+    accessRoutes: []  // 可访问的路由
   },
   mutations: {
     /**
@@ -92,6 +124,9 @@ export default {
     SET_ROUTES: (state, routes) => {
       state.addRoutes = routes
       state.routes = [...constantRoutes, ...routes]
+    },
+    SET_ACCESS_ROUTES(state, routes) {
+      state.accessRoutes = routes
     }
   },
   actions: {
@@ -132,7 +167,8 @@ export default {
         } else {
           accessedRoutes = asyncRoutes
         }
-        commit('SET_ROUTES', accessedRoutes)
+        commit('SET_ROUTES', accessedRoutes)  // 设置有权限的路由
+        commit('SET_ACCESS_ROUTES', [ ...filterNotHiddenRoutes(constantRoutes), ...filterNotHiddenRoutes(asyncRoutes) ])  // 设置所有可访问路由
         resolve(accessedRoutes)
       })
       // return new Promise(resolve => {

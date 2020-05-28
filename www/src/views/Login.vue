@@ -61,11 +61,12 @@
 import { setToken } from '@/lib/util'
 
 export default {
+  name: 'login',
   data() {
     return {
       loginForm: {
         username: 'admin',
-        password: '111111'
+        password: '000000'
       },
       loginRules: {
         username: [
