@@ -123,15 +123,14 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      })
-        .then(async () => {
-          await deleteRole(row.id)
-          this.rolesList.splice($index, 1)
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          })
+      }).then(async () => {
+        await deleteRole(row.id)
+        this.rolesList.splice($index, 1)
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
         })
+      })
     },
     async confirmRole() {
       const isEdit = this.dialogType === 'edit'
