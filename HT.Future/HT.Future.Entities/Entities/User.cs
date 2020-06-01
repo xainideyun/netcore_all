@@ -14,11 +14,35 @@ namespace HT.Future.Entities
     /// 用户表
     /// </summary>
     [Table("User")]
-    public class User : IdentityUser<int>, IEntity
+    public class User : BaseEntity // IdentityUser<int>, 
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public override int Id { get => base.Id; set => base.Id = value; }
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //public override int Id { get => base.Id; set => base.Id = value; }
+        /// <summary>
+        /// 登录名
+        /// </summary>
+        public string UserName { get; set; }
+        /// <summary>
+        /// 邮箱
+        /// </summary>
+        public string Email { get; set; }
+        /// <summary>
+        /// 密码
+        /// </summary>
+        public string Password { get; set; }
+        /// <summary>
+        /// 手机号
+        /// </summary>
+        public string Phone { get; set; }
+        /// <summary>
+        /// 登录失败次数
+        /// </summary>
+        public int AccessFailCount { get; set; }
+        /// <summary>
+        /// 微信openid
+        /// </summary>
+        public string OpenId { get; set; }
         /// <summary>
         /// 创建时间
         /// </summary>
@@ -42,7 +66,7 @@ namespace HT.Future.Entities
         /// <summary>
         /// 是否激活
         /// </summary>
-        public bool IsActive { get; set; } = true;
+        public bool IsActive { get; set; }
         /// <summary>
         /// 是否是管理员
         /// </summary>

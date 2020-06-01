@@ -19,3 +19,15 @@ export function getRole() {
     url: '/api/user/role'
   })
 }
+
+export function getList() {
+  return axios.request({
+    url: '/api/user'
+  })
+}
+
+export function getRoles() {
+  return axios.request({
+    url: '/api/user/role'
+  })
+}

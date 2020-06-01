@@ -132,6 +132,14 @@ export const asyncRoutes = [{
         meta: {
           title: '角色列表'
         }
+      },
+      {
+        path: 'userList',
+        name: 'userList',
+        component: () => import('@/views/settings/userList.vue'),
+        meta: {
+          title: '用户列表'
+        }
       }
     ]
   },

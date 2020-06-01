@@ -174,7 +174,7 @@ namespace HT.Future.Entities.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("AccessFailedCount")
+                    b.Property<int>("AccessFailCount")
                         .HasColumnType("int");
 
                     b.Property<int>("Age")
@@ -183,17 +183,11 @@ namespace HT.Future.Entities.Migrations
                     b.Property<string>("Avator")
                         .HasColumnType("text");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime");
 
                     b.Property<string>("Email")
                         .HasColumnType("text");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
 
                     b.Property<string>("FullName")
                         .HasColumnType("text");
@@ -210,32 +204,14 @@ namespace HT.Future.Entities.Migrations
                     b.Property<DateTime?>("LastLoginTime")
                         .HasColumnType("datetime");
 
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("timestamp");
-
-                    b.Property<string>("NormalizedEmail")
+                    b.Property<string>("OpenId")
                         .HasColumnType("text");
 
-                    b.Property<string>("NormalizedUserName")
+                    b.Property<string>("Password")
                         .HasColumnType("text");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<string>("Phone")
                         .HasColumnType("text");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -250,21 +226,58 @@ namespace HT.Future.Entities.Migrations
                         new
                         {
                             Id = 1,
-                            AccessFailedCount = 0,
+                            AccessFailCount = 0,
                             Age = 21,
                             Avator = "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png",
-                            ConcurrencyStamp = "7b7cca3f-e8e2-49c4-abf4-ac8b4a530028",
-                            CreateTime = new DateTime(2020, 5, 28, 18, 1, 55, 679, DateTimeKind.Local).AddTicks(201),
-                            EmailConfirmed = false,
+                            CreateTime = new DateTime(2020, 1, 1, 8, 0, 0, 0, DateTimeKind.Unspecified),
                             FullName = "超级管理员",
                             Gender = 0,
-                            IsActive = true,
+                            IsActive = false,
                             IsAdmin = true,
-                            LockoutEnabled = false,
-                            PasswordHash = "670b14728ad9902aecba32e22fa4f6bd",
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
+                            Password = "670b14728ad9902aecba32e22fa4f6bd",
                             UserName = "admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccessFailCount = 0,
+                            Age = 33,
+                            Avator = "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png",
+                            CreateTime = new DateTime(2020, 1, 1, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            FullName = "关羽",
+                            Gender = 0,
+                            IsActive = false,
+                            IsAdmin = false,
+                            Password = "670b14728ad9902aecba32e22fa4f6bd",
+                            UserName = "guanyu"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AccessFailCount = 0,
+                            Age = 29,
+                            Avator = "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png",
+                            CreateTime = new DateTime(2020, 1, 1, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            FullName = "张飞",
+                            Gender = 0,
+                            IsActive = false,
+                            IsAdmin = false,
+                            Password = "670b14728ad9902aecba32e22fa4f6bd",
+                            UserName = "zhangfei"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AccessFailCount = 0,
+                            Age = 27,
+                            Avator = "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png",
+                            CreateTime = new DateTime(2020, 1, 1, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            FullName = "赵云",
+                            Gender = 0,
+                            IsActive = false,
+                            IsAdmin = false,
+                            Password = "670b14728ad9902aecba32e22fa4f6bd",
+                            UserName = "zhaoyun"
                         });
                 });
 

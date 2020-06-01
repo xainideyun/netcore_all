@@ -60,14 +60,13 @@ namespace HT.Future.TxApi.Controllers
         }
 
         /// <summary>
-        /// 获取用户可访问的路由
+        /// 获取用户绑定的角色
         /// </summary>
         /// <returns></returns>
         [HttpGet("role")]
-        public async Task<ApiResult<object>> GetUserAccesses()
+        public async Task<List<Role>> GetRoles()
         {
-            await Task.CompletedTask;
-            return new { all = true };
+            return await _service.GetRolesAsync(UserId);
         }
 
     }

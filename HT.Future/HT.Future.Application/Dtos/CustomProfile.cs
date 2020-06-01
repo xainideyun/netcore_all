@@ -15,6 +15,7 @@ namespace HT.Future.Application
                 //.ForMember(source => source.Gender, target => target.MapFrom(a => a.Gender.ToDisplay(DisplayProperty.Name)))
                 .ForMember(source => source.Name, target => target.MapFrom(a => a.FullName))
                 .ForMember(source => source.User_id, target => target.MapFrom(a => a.Id))
+                .ForMember(source => source.Gender, target => target.MapFrom(a => a.Gender == GenderType.Female ? "女" : "男"))
                 .ReverseMap();
         }
     }

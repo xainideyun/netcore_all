@@ -34,17 +34,13 @@ namespace HT.Future.Service
             await UpdateAsync(role);
             return role;
         }
-        //public async Task<object> GetUserMenuAuthAsync(int userId)
-        //{
-        //    return null;
-        //}
 
-        //public async Task<List<RoleUser>> AddRoleUsersAsync(IEnumerable<RoleUser> roleUsers)
-        //{
-        //    await DbContext.Set<RoleUser>().AddRangeAsync(roleUsers);
-        //    await DbContext.SaveChangesAsync();
-        //    return roleUsers.ToList();
-        //}
+        public async Task<List<RoleUser>> AddRoleUsersAsync(IEnumerable<RoleUser> roleUsers)
+        {
+            await DbContext.Set<RoleUser>().AddRangeAsync(roleUsers);
+            await DbContext.SaveChangesAsync();
+            return roleUsers.ToList();
+        }
 
     }
 }

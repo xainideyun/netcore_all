@@ -42,7 +42,7 @@ namespace HT.Future.TxApi.Controllers
             {
                 return BadRequest("用户不存在");
             }
-            if (user.PasswordHash != password.ToMd5())
+            if (user.Password != password.ToMd5())
             {
                 return BadRequest("密码不正确");
             }

@@ -14,5 +14,11 @@ namespace HT.Future.IService
         /// <param name="username"></param>
         /// <returns></returns>
         Task<User> GetByUserNameAsync(string username);
+        /// <summary>
+        /// 获取用户所绑定的角色列表
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Task<List<Role>> GetRolesAsync(int userId);
     }
 }

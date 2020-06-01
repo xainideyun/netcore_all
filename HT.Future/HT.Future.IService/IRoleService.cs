@@ -19,5 +19,11 @@ namespace HT.Future.IService
         /// <param name="role"></param>
         /// <returns></returns>
         Task<Role> UpdateRoleAsync(Role role);
+        /// <summary>
+        /// 新增用户角色关系
+        /// </summary>
+        /// <param name="users"></param>
+        /// <returns></returns>
+        Task<List<RoleUser>> AddRoleUsersAsync(IEnumerable<RoleUser> users);
     }
 }
