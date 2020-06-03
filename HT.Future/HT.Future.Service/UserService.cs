@@ -32,5 +32,22 @@ namespace HT.Future.Service
             return list.Select(a => a.Role).ToList();
         }
 
+        public async Task<List<string>> GetAccessMenuAsync(int userId)
+        {
+            var roles = await DbContext.Set<RoleUser>()
+                .Where(a => a.UserId == userId)
+                .Select(a => a.RoleId)
+                .ToArrayAsync();
+            var menus = await DbContext.Set<AccessAuthority>()
+                .Where(a => a.RoleId != null && roles.Contains(a.RoleId.Value))
+                .Select(a => a.Name)
+                .ToListAsync();
+            var others = await DbContext.Set<AccessAuthority>()
+                .Where(a => a.UserId != null && a.UserId == userId)
+                .Select(a => a.Name)
+                .ToListAsync();
+            return menus.Concat(others).Distinct().ToList();
+        }
+
     }
 }

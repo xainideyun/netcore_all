@@ -83,9 +83,9 @@ namespace HT.Future.TxApi.Controllers
         /// <param name="roleIds"></param>
         /// <returns></returns>
         [HttpPost("bind")]
-        public async Task<ApiResult> BindRole([FromBody]List<int> roleIds)
+        public async Task<ApiResult> BindRole([FromBody]List<RoleUser> arr)
         {
-            var arr = roleIds.Select(a => new RoleUser { RoleId = a, UserId = UserId });
+            //var arr = roleIds.Select(a => new RoleUser { RoleId = a, UserId = UserId });
             await _service.AddRoleUsersAsync(arr);
             return Ok();
         }

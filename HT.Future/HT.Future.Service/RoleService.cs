@@ -37,6 +37,13 @@ namespace HT.Future.Service
 
         public async Task<List<RoleUser>> AddRoleUsersAsync(IEnumerable<RoleUser> roleUsers)
         {
+            var userId = roleUsers.First().UserId;
+            var exist = await DbContext.Set<RoleUser>().Where(a => a.UserId == userId).ToListAsync();
+            if (exist.Count > 0)
+            {
+                DbContext.RemoveRange(exist);
+                await DbContext.SaveChangesAsync();
+            }
             await DbContext.Set<RoleUser>().AddRangeAsync(roleUsers);
             await DbContext.SaveChangesAsync();
             return roleUsers.ToList();

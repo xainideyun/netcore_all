@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 
 namespace HT.Future.TxApi.Controllers
 {
@@ -63,11 +64,24 @@ namespace HT.Future.TxApi.Controllers
         /// 获取用户绑定的角色
         /// </summary>
         /// <returns></returns>
-        [HttpGet("role")]
-        public async Task<List<Role>> GetRoles()
+        [HttpGet("role/{id}")]
+        public async Task<ApiResult<List<Role>>> GetRoles(int id)
         {
-            return await _service.GetRolesAsync(UserId);
+            return await _service.GetRolesAsync(id == 0 ? UserId : id);
         }
+
+        /// <summary>
+        /// 获取用户可访问的菜单
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("menus")]
+        public async Task<ApiResult<object>> GetMenus()
+        {
+            if (IsAdmin) return new { all = true };
+            var menus = await _service.GetAccessMenuAsync(UserId);
+            return new { all = false, menus };
+        }
+
 
     }
 }

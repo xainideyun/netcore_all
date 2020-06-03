@@ -20,5 +20,12 @@ namespace HT.Future.IService
         /// <param name="userId"></param>
         /// <returns></returns>
         Task<List<Role>> GetRolesAsync(int userId);
+        /// <summary>
+        /// 获取用户可访问菜单
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Task<List<string>> GetAccessMenuAsync(int userId);
+
     }
 }
