@@ -73,18 +73,6 @@ namespace HT.Future.Entities.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Address");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Detail = "湖北省武汉市珞瑜路12号",
-                            Lat = 1.0,
-                            Lng = 2.0,
-                            Phone = "13900000000",
-                            Title = "武汉大学",
-                            UserId = 1
-                        });
                 });
 
             modelBuilder.Entity("HT.Future.Entities.NLogInfo", b =>
@@ -177,10 +165,16 @@ namespace HT.Future.Entities.Migrations
                     b.Property<int>("AccessFailCount")
                         .HasColumnType("int");
 
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
                     b.Property<string>("Avator")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreateTime")
@@ -189,20 +183,35 @@ namespace HT.Future.Entities.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
+                    b.Property<short>("EmailConfirmed")
+                        .HasColumnType("bit");
+
                     b.Property<string>("FullName")
                         .HasColumnType("text");
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<short>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsAdmin")
+                    b.Property<short>("IsAdmin")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastLoginTime")
                         .HasColumnType("datetime");
+
+                    b.Property<short>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("timestamp");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("text");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("text");
 
                     b.Property<string>("OpenId")
                         .HasColumnType("text");
@@ -210,8 +219,23 @@ namespace HT.Future.Entities.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("text");
 
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("text");
+
                     b.Property<string>("Phone")
                         .HasColumnType("text");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
+
+                    b.Property<short>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("text");
+
+                    b.Property<short>("TwoFactorEnabled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -227,57 +251,19 @@ namespace HT.Future.Entities.Migrations
                         {
                             Id = 1,
                             AccessFailCount = 0,
-                            Age = 21,
-                            Avator = "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png",
-                            CreateTime = new DateTime(2020, 1, 1, 8, 0, 0, 0, DateTimeKind.Unspecified),
-                            FullName = "超级管理员",
-                            Gender = 0,
-                            IsActive = false,
-                            IsAdmin = true,
-                            Password = "670b14728ad9902aecba32e22fa4f6bd",
-                            UserName = "admin"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AccessFailCount = 0,
-                            Age = 33,
-                            Avator = "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png",
-                            CreateTime = new DateTime(2020, 1, 1, 8, 0, 0, 0, DateTimeKind.Unspecified),
-                            FullName = "关羽",
+                            AccessFailedCount = 0,
+                            Age = 0,
+                            ConcurrencyStamp = "306806ea-affd-4126-8a4f-e4b779cf5086",
+                            CreateTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailConfirmed = false,
+                            FullName = "sss",
                             Gender = 0,
                             IsActive = false,
                             IsAdmin = false,
-                            Password = "670b14728ad9902aecba32e22fa4f6bd",
-                            UserName = "guanyu"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AccessFailCount = 0,
-                            Age = 29,
-                            Avator = "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png",
-                            CreateTime = new DateTime(2020, 1, 1, 8, 0, 0, 0, DateTimeKind.Unspecified),
-                            FullName = "张飞",
-                            Gender = 0,
-                            IsActive = false,
-                            IsAdmin = false,
-                            Password = "670b14728ad9902aecba32e22fa4f6bd",
-                            UserName = "zhangfei"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            AccessFailCount = 0,
-                            Age = 27,
-                            Avator = "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png",
-                            CreateTime = new DateTime(2020, 1, 1, 8, 0, 0, 0, DateTimeKind.Unspecified),
-                            FullName = "赵云",
-                            Gender = 0,
-                            IsActive = false,
-                            IsAdmin = false,
-                            Password = "670b14728ad9902aecba32e22fa4f6bd",
-                            UserName = "zhaoyun"
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            TwoFactorEnabled = false,
+                            UserName = "sunxiaoshuang"
                         });
                 });
 

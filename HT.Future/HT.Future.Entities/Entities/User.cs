@@ -14,19 +14,19 @@ namespace HT.Future.Entities
     /// 用户表
     /// </summary>
     [Table("User")]
-    public class User : BaseEntity // IdentityUser<int>, 
+    public class User : IdentityUser<int>, IEntity //BaseEntity // , 
     {
         //[Key]
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        //public override int Id { get => base.Id; set => base.Id = value; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public override int Id { get => base.Id; set => base.Id = value; }
         /// <summary>
         /// 登录名
         /// </summary>
-        public string UserName { get; set; }
+        //public string UserName { get; set; }
         /// <summary>
         /// 邮箱
         /// </summary>
-        public string Email { get; set; }
+        //public string Email { get; set; }
         /// <summary>
         /// 密码
         /// </summary>
@@ -87,6 +87,8 @@ namespace HT.Future.Entities
         /// 可访问的路由
         /// </summary>
         public virtual ICollection<AccessAuthority> AccessAuthorities { get; set; }
+
+
     }
 
     /// <summary>

@@ -51,6 +51,7 @@ namespace HT.Future.TxApi
                     option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;     // 循环引用忽略
                 });
 
+            
 
             #region api版本
 

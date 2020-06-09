@@ -33,7 +33,19 @@ namespace HT.Future.Entities.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     UserName = table.Column<string>(maxLength: 100, nullable: false),
+                    NormalizedUserName = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
+                    NormalizedEmail = table.Column<string>(nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
                     Password = table.Column<string>(nullable: true),
                     Phone = table.Column<string>(nullable: true),
                     AccessFailCount = table.Column<int>(nullable: false),
@@ -156,19 +168,8 @@ namespace HT.Future.Entities.Migrations
 
             migrationBuilder.InsertData(
                 table: "User",
-                columns: new[] { "Id", "AccessFailCount", "Age", "Avator", "CreateTime", "Email", "FullName", "Gender", "IsActive", "IsAdmin", "LastLoginTime", "OpenId", "Password", "Phone", "UserName" },
-                values: new object[,]
-                {
-                    { 1, 0, 21, "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png", new DateTime(2020, 1, 1, 8, 0, 0, 0, DateTimeKind.Unspecified), null, "超级管理员", 0, false, true, null, null, "670b14728ad9902aecba32e22fa4f6bd", null, "admin" },
-                    { 2, 0, 33, "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png", new DateTime(2020, 1, 1, 8, 0, 0, 0, DateTimeKind.Unspecified), null, "关羽", 0, false, false, null, null, "670b14728ad9902aecba32e22fa4f6bd", null, "guanyu" },
-                    { 3, 0, 29, "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png", new DateTime(2020, 1, 1, 8, 0, 0, 0, DateTimeKind.Unspecified), null, "张飞", 0, false, false, null, null, "670b14728ad9902aecba32e22fa4f6bd", null, "zhangfei" },
-                    { 4, 0, 27, "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png", new DateTime(2020, 1, 1, 8, 0, 0, 0, DateTimeKind.Unspecified), null, "赵云", 0, false, false, null, null, "670b14728ad9902aecba32e22fa4f6bd", null, "zhaoyun" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Address",
-                columns: new[] { "Id", "Contacts", "Detail", "Lat", "Lng", "Phone", "Title", "UserId" },
-                values: new object[] { 1, null, "湖北省武汉市珞瑜路12号", 1.0, 2.0, "13900000000", "武汉大学", 1 });
+                columns: new[] { "Id", "AccessFailCount", "AccessFailedCount", "Age", "Avator", "ConcurrencyStamp", "CreateTime", "Email", "EmailConfirmed", "FullName", "Gender", "IsActive", "IsAdmin", "LastLoginTime", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OpenId", "Password", "PasswordHash", "Phone", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { 1, 0, 0, 0, null, "306806ea-affd-4126-8a4f-e4b779cf5086", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, "sss", 0, false, false, null, false, null, null, null, null, null, null, null, null, false, null, false, "sunxiaoshuang" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AccessAuthority_RoleId",

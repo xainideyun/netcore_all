@@ -119,6 +119,7 @@ namespace HT.Future.Common
         {
             IEnumerable<Type> types = assemblies.SelectMany(a => a.GetExportedTypes())
                 .Where(c => c.IsClass && !c.IsAbstract && c.IsPublic && typeof(ISeed).IsAssignableFrom(c));
+            if (types == null) return;
             foreach (var type in types)
             {
                 //Console.WriteLine(type.FullName);
