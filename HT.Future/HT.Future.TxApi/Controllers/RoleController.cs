@@ -80,7 +80,7 @@ namespace HT.Future.TxApi.Controllers
         /// <summary>
         /// 为当前用户绑定角色
         /// </summary>
-        /// <param name="roleIds"></param>
+        /// <param name="arr"></param>
         /// <returns></returns>
         [HttpPost("bind")]
         public async Task<ApiResult> BindRole([FromBody]List<RoleUser> arr)

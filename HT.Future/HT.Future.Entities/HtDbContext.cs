@@ -19,7 +19,7 @@ namespace HT.Future.Entities
 
             modelBuilder.RegisterAllEntities<IEntity>(entitiesAssembly);
             modelBuilder.RegisterEntityTypeConfiguration(entitiesAssembly);
-            //modelBuilder.RegisterAllSeeds(entitiesAssembly);
+            modelBuilder.RegisterAllSeeds(entitiesAssembly);
 
             modelBuilder.Entity<User>().HasData(new User { Id = 1, FullName = "sss", UserName = "sunxiaoshuang" });
 
