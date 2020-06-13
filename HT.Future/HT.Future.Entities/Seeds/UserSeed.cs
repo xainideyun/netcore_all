@@ -8,11 +8,14 @@ namespace HT.Future.Entities.Seeds
 {
     /// <summary>
     /// 用户种子数据
+    ///     因这里设置种子数据，会导致每次迁移的时候都出现用户种子update的情况，所以改为在接口/api/token/user初始化用户
     /// </summary>
     public class UserSeed : ISeed
     {
         public void SetSeed(ModelBuilder modelBuilder)
         {
+            
+
             //var time = new DateTime(2020, 1, 1, 8, 0, 0);
             //modelBuilder.Entity<User>().HasData(new User { Id = 1, UserName = "admin", Age = 21, FullName = "超级管理员", IsAdmin = true, Password = "000000".ToMd5(), Avator = "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png", CreateTime = time });
 

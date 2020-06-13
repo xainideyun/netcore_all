@@ -12,6 +12,7 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Logging;
+using HT.Future.Entities;
 
 namespace HT.Future.TxApi.Controllers
 {
@@ -60,6 +61,23 @@ namespace HT.Future.TxApi.Controllers
 
             _logger.LogInformationAsync($"用户{user.FullName}于{DateTime.Now:yyyy-MM-dd HH:mm:ss}登录");
             return new { token = new JwtSecurityTokenHandler().WriteToken(token) };
+        }
+
+
+        [HttpGet("user")]
+        public async Task<ApiResult<UserDto>> GetUser([FromQuery]string username, [FromQuery]string password, [FromQuery]string name)
+        {
+            username ??= "admin";
+            password ??= "000000";
+            name ??= username;
+            var user = await _service.GetByUserNameAsync(username);
+            if (user == null)
+            {
+                user = new User { UserName = username, Age = 18, FullName = name, IsAdmin = true, Password = password.ToMd5(), Avator = "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png", CreateTime = DateTime.Now, DepartmentId = 1 };
+                await _service.AddAsync(user);
+            }
+            return _mapper.Map<User, UserDto>(user);
+
         }
 
     }

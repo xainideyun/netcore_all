@@ -76,13 +76,17 @@ namespace HT.Future.Entities
         /// </summary>
         public DateTime? LastLoginTime { get; set; }
         /// <summary>
+        /// 所属部门id
+        /// </summary>
+        public int DepartmentId { get; set; }
+        /// <summary>
+        /// 所属部门对象实体
+        /// </summary>
+        public virtual Department Department { get; set; }
+        /// <summary>
         /// 地址列表
         /// </summary>
         public virtual ICollection<Address> Addresses { get; set; }
-        ///// <summary>
-        ///// 用户所绑定的角色关系
-        ///// </summary>
-        //public virtual ICollection<RoleUser> RoleUsers { get; set; }
         /// <summary>
         /// 可访问的路由
         /// </summary>
