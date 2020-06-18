@@ -21,7 +21,7 @@ namespace HT.Future.Entities
             modelBuilder.RegisterEntityTypeConfiguration(entitiesAssembly);
             modelBuilder.RegisterAllSeeds(entitiesAssembly);
 
-            modelBuilder.Entity<User>().HasData(new User { Id = 1, FullName = "sss", UserName = "sunxiaoshuang" });
+            //modelBuilder.Entity<User>().HasData(new User { Id = 1, FullName = "sss", UserName = "sunxiaoshuang" });
 
             //// 初始化用户
             //modelBuilder.Entity<User>().HasData(new User { Id = 1, UserName = "super_admin", Age = 21, FullName = "超级管理员", IsAdmin = true, PasswordHash = "000000".ToMd5(), Avator = "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png" });

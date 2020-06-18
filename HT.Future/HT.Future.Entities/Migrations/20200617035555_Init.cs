@@ -57,7 +57,8 @@ namespace HT.Future.Entities.Migrations
                     Avator = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
                     IsAdmin = table.Column<bool>(nullable: false),
-                    LastLoginTime = table.Column<DateTime>(nullable: true)
+                    LastLoginTime = table.Column<DateTime>(nullable: true),
+                    DepartmentId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -87,6 +88,36 @@ namespace HT.Future.Entities.Migrations
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Department",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    Sort = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    ParentId = table.Column<int>(nullable: true),
+                    ManagerId = table.Column<int>(nullable: true),
+                    ManagerId1 = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Department", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Department_User_ManagerId1",
+                        column: x => x.ManagerId1,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Department_Department_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "Department",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -167,9 +198,24 @@ namespace HT.Future.Entities.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "User",
-                columns: new[] { "Id", "AccessFailCount", "AccessFailedCount", "Age", "Avator", "ConcurrencyStamp", "CreateTime", "Email", "EmailConfirmed", "FullName", "Gender", "IsActive", "IsAdmin", "LastLoginTime", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OpenId", "Password", "PasswordHash", "Phone", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { 1, 0, 0, 0, null, "306806ea-affd-4126-8a4f-e4b779cf5086", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, "sss", 0, false, false, null, false, null, null, null, null, null, null, null, null, false, null, false, "sunxiaoshuang" });
+                table: "Department",
+                columns: new[] { "Id", "Description", "ManagerId", "ManagerId1", "Name", "ParentId", "Sort" },
+                values: new object[] { 1, "我的公司", null, null, "公司", null, 1 });
+
+            migrationBuilder.InsertData(
+                table: "Department",
+                columns: new[] { "Id", "Description", "ManagerId", "ManagerId1", "Name", "ParentId", "Sort" },
+                values: new object[] { 2, "公司人事部", null, null, "人事部", 1, 1 });
+
+            migrationBuilder.InsertData(
+                table: "Department",
+                columns: new[] { "Id", "Description", "ManagerId", "ManagerId1", "Name", "ParentId", "Sort" },
+                values: new object[] { 3, "公司财务部", null, null, "财务部", 1, 2 });
+
+            migrationBuilder.InsertData(
+                table: "Department",
+                columns: new[] { "Id", "Description", "ManagerId", "ManagerId1", "Name", "ParentId", "Sort" },
+                values: new object[] { 4, "公司技术部", null, null, "技术部", 1, 3 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AccessAuthority_RoleId",
@@ -187,6 +233,16 @@ namespace HT.Future.Entities.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Department_ManagerId1",
+                table: "Department",
+                column: "ManagerId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Department_ParentId",
+                table: "Department",
+                column: "ParentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Role_UserId",
                 table: "Role",
                 column: "UserId");
@@ -200,10 +256,27 @@ namespace HT.Future.Entities.Migrations
                 name: "IX_RoleUser_UserId",
                 table: "RoleUser",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_DepartmentId",
+                table: "User",
+                column: "DepartmentId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_User_Department_DepartmentId",
+                table: "User",
+                column: "DepartmentId",
+                principalTable: "Department",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Department_User_ManagerId1",
+                table: "Department");
+
             migrationBuilder.DropTable(
                 name: "AccessAuthority");
 
@@ -221,6 +294,9 @@ namespace HT.Future.Entities.Migrations
 
             migrationBuilder.DropTable(
                 name: "User");
+
+            migrationBuilder.DropTable(
+                name: "Department");
         }
     }
 }

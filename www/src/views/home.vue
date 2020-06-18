@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
+    <img alt="Vue logo" src="../assets/logo.png" />
     <el-button type="primary">确定</el-button>
     <el-button type="warning">确定</el-button>
     <el-button type="danger">确定</el-button>
@@ -13,10 +13,19 @@
 </template>
 
 <script>
-
+import axios from '@/api'
 export default {
   name: 'home',
-  created() {
+  async created() {
+    let ss = await axios.multiRequest([
+      {
+        url: '/api/user/current'
+      },
+      {
+        url: '/api/user'
+      }
+    ])
+    console.log(ss)
     
   }
 }

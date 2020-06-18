@@ -64,6 +64,12 @@ class HttpRequest {
     this.interceptors(instance, options.url)
     return instance(options)
   }
+  multiRequest(commands) {
+    let self = this
+    if (Object.prototype.toString.call(commands) !== '[object Array]') throw new Error('参数类型错误...')
+    let arr = commands.map(item => self.request(item))
+    return axios.all(arr)
+  }
 }
 
 export default HttpRequest

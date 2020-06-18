@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HT.Future.Entities.Migrations
 {
     [DbContext(typeof(HtDbContext))]
-    [Migration("20200604020722_Init")]
+    [Migration("20200617035555_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,6 +75,72 @@ namespace HT.Future.Entities.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Address");
+                });
+
+            modelBuilder.Entity("HT.Future.Entities.Department", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("ManagerId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ManagerId1")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Sort")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ManagerId1");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("Department");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "我的公司",
+                            Name = "公司",
+                            Sort = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "公司人事部",
+                            Name = "人事部",
+                            ParentId = 1,
+                            Sort = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "公司财务部",
+                            Name = "财务部",
+                            ParentId = 1,
+                            Sort = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "公司技术部",
+                            Name = "技术部",
+                            ParentId = 1,
+                            Sort = 3
+                        });
                 });
 
             modelBuilder.Entity("HT.Future.Entities.NLogInfo", b =>
@@ -182,6 +248,9 @@ namespace HT.Future.Entities.Migrations
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime");
 
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
@@ -246,27 +315,9 @@ namespace HT.Future.Entities.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.HasIndex("DepartmentId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AccessFailCount = 0,
-                            AccessFailedCount = 0,
-                            Age = 0,
-                            ConcurrencyStamp = "306806ea-affd-4126-8a4f-e4b779cf5086",
-                            CreateTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EmailConfirmed = false,
-                            FullName = "sss",
-                            Gender = 0,
-                            IsActive = false,
-                            IsAdmin = false,
-                            LockoutEnabled = false,
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserName = "sunxiaoshuang"
-                        });
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("HT.Future.Entities.AccessAuthority", b =>
@@ -287,6 +338,17 @@ namespace HT.Future.Entities.Migrations
                         .WithMany("Addresses")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.SetNull);
+                });
+
+            modelBuilder.Entity("HT.Future.Entities.Department", b =>
+                {
+                    b.HasOne("HT.Future.Entities.User", "Manager")
+                        .WithMany()
+                        .HasForeignKey("ManagerId1");
+
+                    b.HasOne("HT.Future.Entities.Department", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
                 });
 
             modelBuilder.Entity("HT.Future.Entities.Role", b =>
@@ -310,6 +372,14 @@ namespace HT.Future.Entities.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HT.Future.Entities.User", b =>
+                {
+                    b.HasOne("HT.Future.Entities.Department", "Department")
+                        .WithMany("Users")
+                        .HasForeignKey("DepartmentId")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
