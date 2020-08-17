@@ -30,7 +30,7 @@ namespace HT.Future.TxApi.Controllers
         }
 
         /// <summary>
-        /// 应用授权
+        /// 应用授权（pc端）
         /// </summary>
         /// <param name="username">用户名</param>
         /// <param name="password">用户密码</param>
@@ -61,6 +61,27 @@ namespace HT.Future.TxApi.Controllers
 
             _logger.LogInformationAsync($"用户{user.FullName}于{DateTime.Now:yyyy-MM-dd HH:mm:ss}登录");
             return new { token = new JwtSecurityTokenHandler().WriteToken(token) };
+        }
+
+        /// <summary>
+        /// 应用授权（小程序端）
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("code/{code}")]
+        public async Task<ApiResult<object>> GetToken(string code)
+        {
+            return new { name = "孙小双", age = 11, code};
+        }
+
+        /// <summary>
+        /// 根据openid获取token
+        /// </summary>
+        /// <param name="openid"></param>
+        /// <returns></returns>
+        [HttpGet("open")]
+        public async Task<ApiResult<object>> GetTokenByOpenId(string openid)
+        {
+            return null;
         }
 
 

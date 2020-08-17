@@ -6,6 +6,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <!--忽略1591，NU1603警告-->
     <NoWarn>$(NoWarn);1591;NU1603;ASP0000;NU1701</NoWarn>
+    <UserSecretsId>d61e0fc0-0534-4dbb-b30c-c91e5fdb9887</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

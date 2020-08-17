@@ -49,6 +49,6 @@ namespace HT.Future.Entities
         /// <summary>
         /// 营业执照
         /// </summary>
-        public string MyProperty { get; set; }
+        //public string MyProperty { get; set; }
     }
 }
