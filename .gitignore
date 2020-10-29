@@ -277,5 +277,5 @@ yarn-error.log*
 .vscode
 *.ntvs*
 *.njsproj
-*.sln
+# *.sln
 *.sw?
